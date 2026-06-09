@@ -9,16 +9,88 @@
 
 <body>
 
-<div class="hero">
-    <h1>420 DONUTZ</h1>
-    <p>Private Members Club Barcelona</p>
+<!-- NAV -->
+<header class="nav">
+  <div class="logo">420 DONUTZ</div>
 
-    <div class="lang">
-        <button>FR</button>
-        <button>EN</button>
-        <button>ES</button>
-    </div>
-</div>
+  <nav>
+    <a href="#home">Home</a>
+    <a href="#about">About</a>
+    <a href="#gallery">Gallery</a>
+    <a href="#contact">Contact</a>
+  </nav>
+
+  <div class="lang">
+    <button onclick="setLang('fr')">FR</button>
+    <button onclick="setLang('en')">EN</button>
+    <button onclick="setLang('es')">ES</button>
+  </div>
+</header>
+
+<!-- HERO -->
+<section id="home" class="hero">
+  <div class="hero-box">
+    <h1>420 DONUTZ</h1>
+    <p id="subtitle">Private Members Club Barcelona</p>
+    <a href="#about" class="btn">Explore</a>
+  </div>
+</section>
+
+<!-- ABOUT -->
+<section id="about" class="section">
+  <h2>About</h2>
+  <p id="aboutText">
+    A modern private members club experience in Barcelona with a premium lounge atmosphere.
+  </p>
+</section>
+
+<!-- GALLERY -->
+<section id="gallery" class="section">
+  <h2>Gallery</h2>
+
+  <div class="grid">
+    <div class="card"></div>
+    <div class="card"></div>
+    <div class="card"></div>
+    <div class="card"></div>
+    <div class="card"></div>
+    <div class="card"></div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section id="contact" class="section">
+  <h2>Contact</h2>
+
+  <a class="whatsapp" href="https://wa.me/0000000000" target="_blank">
+    💬 Contact on WhatsApp
+  </a>
+</section>
+
+<footer>
+© 420 Donutz - Barcelona
+</footer>
+
+<script>
+function setLang(lang){
+
+if(lang === "en"){
+document.getElementById("subtitle").innerText = "Private Members Club Barcelona";
+document.getElementById("aboutText").innerText = "A modern premium lounge experience.";
+}
+
+if(lang === "fr"){
+document.getElementById("subtitle").innerText = "Club privé à Barcelone";
+document.getElementById("aboutText").innerText = "Un espace lounge moderne et premium.";
+}
+
+if(lang === "es"){
+document.getElementById("subtitle").innerText = "Club privado en Barcelona";
+document.getElementById("aboutText").innerText = "Experiencia lounge moderna y premium.";
+}
+
+}
+</script>
 
 </body>
 </html>
