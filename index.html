@@ -9,6 +9,12 @@
 
 <body>
 
+<!-- LOADER -->
+<div id="loader">
+  <div class="spinner"></div>
+  <p>420 DONUTZ</p>
+</div>
+
 <!-- NAV -->
 <header class="nav">
   <div class="logo">420 DONUTZ</div>
@@ -16,6 +22,7 @@
   <nav>
     <a href="#home">Home</a>
     <a href="#about">About</a>
+    <a href="#stats">Stats</a>
     <a href="#gallery">Gallery</a>
     <a href="#contact">Contact</a>
   </nav>
@@ -32,38 +39,56 @@
   <div class="hero-box">
     <h1>420 DONUTZ</h1>
     <p id="subtitle">Private Members Club Barcelona</p>
-    <a href="#about" class="btn">Explore</a>
+    <a href="#about" class="btn">Enter Experience</a>
   </div>
 </section>
 
 <!-- ABOUT -->
-<section id="about" class="section">
+<section id="about" class="section reveal">
   <h2>About</h2>
   <p id="aboutText">
-    A modern private members club experience in Barcelona with a premium lounge atmosphere.
+    A premium private members club experience in Barcelona with a modern lounge atmosphere.
   </p>
 </section>
 
+<!-- STATS -->
+<section id="stats" class="stats reveal">
+
+  <div class="stat">
+    <h3>2500+</h3>
+    <p>Members</p>
+  </div>
+
+  <div class="stat">
+    <h3>150+</h3>
+    <p>Events</p>
+  </div>
+
+  <div class="stat">
+    <h3>5★</h3>
+    <p>Experience</p>
+  </div>
+
+</section>
+
 <!-- GALLERY -->
-<section id="gallery" class="section">
+<section id="gallery" class="section reveal">
   <h2>Gallery</h2>
 
   <div class="grid">
-    <div class="card"></div>
-    <div class="card"></div>
-    <div class="card"></div>
-    <div class="card"></div>
-    <div class="card"></div>
-    <div class="card"></div>
+    <div class="card" style="background-image:url('https://images.unsplash.com/photo-1521335629791-ce4aec67dd47?auto=format&fit=crop&w=800')"></div>
+    <div class="card" style="background-image:url('https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=800')"></div>
+    <div class="card" style="background-image:url('https://images.unsplash.com/photo-1470229722913-7c0e2dbbafd3?auto=format&fit=crop&w=800')"></div>
+    <div class="card" style="background-image:url('https://images.unsplash.com/photo-1496307042754-b4aa456c4a2d?auto=format&fit=crop&w=800')"></div>
   </div>
 </section>
 
 <!-- CONTACT -->
-<section id="contact" class="section">
+<section id="contact" class="section reveal">
   <h2>Contact</h2>
 
-  <a class="whatsapp" href="https://wa.me/0000000000" target="_blank">
-    💬 Contact on WhatsApp
+  <a class="whatsapp" href="https://wa.me/33612345678" target="_blank">
+    💬 WhatsApp Us
   </a>
 </section>
 
@@ -71,25 +96,65 @@
 © 420 Donutz - Barcelona
 </footer>
 
+<!-- POPUP -->
+<div id="popup" onclick="closePopup()">
+  <img id="popupImg">
+</div>
+
 <script>
+
+/* LOADER */
+window.addEventListener("load",()=>{
+  setTimeout(()=>{
+    document.getElementById("loader").style.display="none";
+  },1200);
+});
+
+/* LANGUAGE */
 function setLang(lang){
 
-if(lang === "en"){
-document.getElementById("subtitle").innerText = "Private Members Club Barcelona";
-document.getElementById("aboutText").innerText = "A modern premium lounge experience.";
+if(lang==="fr"){
+document.getElementById("subtitle").innerText="Club privé premium à Barcelone";
+document.getElementById("aboutText").innerText="Expérience lounge moderne et exclusive.";
 }
 
-if(lang === "fr"){
-document.getElementById("subtitle").innerText = "Club privé à Barcelone";
-document.getElementById("aboutText").innerText = "Un espace lounge moderne et premium.";
+if(lang==="en"){
+document.getElementById("subtitle").innerText="Premium private members club Barcelona";
+document.getElementById("aboutText").innerText="A high-end modern lounge experience.";
 }
 
-if(lang === "es"){
-document.getElementById("subtitle").innerText = "Club privado en Barcelona";
-document.getElementById("aboutText").innerText = "Experiencia lounge moderna y premium.";
+if(lang==="es"){
+document.getElementById("subtitle").innerText="Club privado premium en Barcelona";
+document.getElementById("aboutText").innerText="Experiencia lounge exclusiva y moderna.";
+}
 }
 
+/* GALLERY POPUP */
+document.querySelectorAll(".card").forEach(card=>{
+card.addEventListener("click",()=>{
+document.getElementById("popup").style.display="flex";
+document.getElementById("popupImg").src =
+card.style.backgroundImage.slice(5,-2);
+});
+});
+
+function closePopup(){
+document.getElementById("popup").style.display="none";
 }
+
+/* SCROLL REVEAL */
+const observer = new IntersectionObserver(entries=>{
+entries.forEach(entry=>{
+if(entry.isIntersecting){
+entry.target.classList.add("active");
+}
+});
+});
+
+document.querySelectorAll(".reveal").forEach(el=>{
+observer.observe(el);
+});
+
 </script>
 
 </body>
