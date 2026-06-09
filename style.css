@@ -1,9 +1,38 @@
+html{
+scroll-behavior:smooth;
+}
+
 body{
 margin:0;
 font-family:Arial;
 background:#000;
 color:white;
-scroll-behavior:smooth;
+}
+
+/* LOADER */
+#loader{
+position:fixed;
+width:100%;
+height:100%;
+background:#000;
+display:flex;
+flex-direction:column;
+justify-content:center;
+align-items:center;
+z-index:9999;
+}
+
+.spinner{
+width:50px;
+height:50px;
+border:3px solid #222;
+border-top:3px solid #7CFC00;
+border-radius:50%;
+animation:spin 1s linear infinite;
+}
+
+@keyframes spin{
+to{transform:rotate(360deg);}
 }
 
 /* NAV */
@@ -56,13 +85,13 @@ text-align:center;
 background:radial-gradient(circle,#111,#000);
 }
 
-.hero-box h1{
+.hero h1{
 font-size:80px;
 color:#7CFC00;
 text-shadow:0 0 30px #7CFC00;
-animation:fade 2s ease-in;
 }
 
+/* BUTTON */
 .btn{
 display:inline-block;
 margin-top:20px;
@@ -72,12 +101,6 @@ color:black;
 border-radius:30px;
 text-decoration:none;
 font-weight:bold;
-transition:0.3s;
-}
-
-.btn:hover{
-transform:scale(1.05);
-box-shadow:0 0 25px #7CFC00;
 }
 
 /* SECTIONS */
@@ -90,6 +113,20 @@ h2{
 color:#7CFC00;
 }
 
+/* STATS */
+.stats{
+display:flex;
+justify-content:center;
+gap:50px;
+padding:80px 20px;
+text-align:center;
+}
+
+.stat h3{
+color:#7CFC00;
+font-size:40px;
+}
+
 /* GALLERY */
 .grid{
 display:grid;
@@ -100,16 +137,38 @@ margin-top:30px;
 
 .card{
 height:200px;
-background:#111;
-border:1px solid #222;
-transition:0.3s;
+background-size:cover;
+background-position:center;
 border-radius:10px;
+cursor:pointer;
+transition:0.3s;
+border:1px solid #222;
 }
 
 .card:hover{
 transform:scale(1.05);
 border-color:#7CFC00;
 box-shadow:0 0 20px #7CFC00;
+}
+
+/* POPUP */
+#popup{
+position:fixed;
+top:0;
+left:0;
+width:100%;
+height:100%;
+background:rgba(0,0,0,0.9);
+display:none;
+justify-content:center;
+align-items:center;
+z-index:2000;
+}
+
+#popup img{
+max-width:80%;
+border:2px solid #7CFC00;
+border-radius:10px;
 }
 
 /* WHATSAPP */
@@ -124,15 +183,21 @@ text-decoration:none;
 font-weight:bold;
 }
 
+/* REVEAL */
+.reveal{
+opacity:0;
+transform:translateY(50px);
+transition:1s;
+}
+
+.reveal.active{
+opacity:1;
+transform:translateY(0);
+}
+
 /* FOOTER */
 footer{
 padding:20px;
 text-align:center;
 border-top:1px solid #111;
-}
-
-/* ANIMATION */
-@keyframes fade{
-from{opacity:0; transform:translateY(-20px);}
-to{opacity:1; transform:translateY(0);}
 }
