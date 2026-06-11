@@ -1,161 +1,467 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="fr">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>420 Donutz</title>
-<link rel="stylesheet" href="style.css">
-</head>
+<title>420 Donutz | Barcelona Social Club</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+<style>
 
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:'Poppins',sans-serif;
+}
+
+body{
+    background:#000;
+    color:white;
+    overflow-x:hidden;
+}
+
+/* ── PIN SCREEN ── */
+
+#pin-screen{
+    position:fixed;
+    inset:0;
+    z-index:9999;
+    background:#000;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    text-align:center;
+    transition:opacity .6s ease;
+}
+
+#pin-screen.hidden{
+    opacity:0;
+    pointer-events:none;
+}
+
+.pin-box{
+    background:rgba(255,255,255,0.04);
+    backdrop-filter:blur(20px);
+    border:1px solid rgba(124,252,0,.3);
+    padding:50px 40px;
+    border-radius:28px;
+    width:90%;
+    max-width:420px;
+    box-shadow:0 0 60px rgba(124,252,0,.2);
+}
+
+.pin-logo{
+    font-size:2.6rem;
+    font-weight:700;
+    color:#7CFC00;
+    text-shadow:0 0 25px #7CFC00;
+    letter-spacing:2px;
+}
+
+.pin-subtitle{
+    margin-top:8px;
+    color:#888;
+    font-size:.9rem;
+    letter-spacing:1px;
+}
+
+.pin-label{
+    margin-top:35px;
+    margin-bottom:16px;
+    color:#bbb;
+    font-size:.85rem;
+    letter-spacing:1.5px;
+    text-transform:uppercase;
+}
+
+/* Dot indicators */
+.pin-dots{
+    display:flex;
+    justify-content:center;
+    gap:14px;
+    margin-bottom:32px;
+}
+
+.pin-dot{
+    width:14px;
+    height:14px;
+    border-radius:50%;
+    border:2px solid #444;
+    background:transparent;
+    transition:.2s;
+}
+
+.pin-dot.filled{
+    background:#7CFC00;
+    border-color:#7CFC00;
+    box-shadow:0 0 8px #7CFC00;
+}
+
+/* Numpad */
+.numpad{
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:12px;
+}
+
+.numpad button{
+    background:#111;
+    border:1px solid #222;
+    color:white;
+    font-size:1.4rem;
+    font-weight:600;
+    padding:18px 10px;
+    border-radius:14px;
+    cursor:pointer;
+    transition:.2s;
+    font-family:'Poppins',sans-serif;
+}
+
+.numpad button:hover{
+    background:#1a1a1a;
+    border-color:#7CFC00;
+    color:#7CFC00;
+}
+
+.numpad button:active{
+    transform:scale(.94);
+}
+
+.numpad button.del{
+    color:#ff4d4d;
+    font-size:1.1rem;
+}
+
+.numpad button.del:hover{
+    border-color:#ff4d4d;
+}
+
+/* Error shake */
+.pin-box.error .pin-dots{
+    animation:shake .4s ease;
+}
+
+.pin-dot.error{
+    border-color:#ff4d4d !important;
+    background:#ff4d4d !important;
+    box-shadow:0 0 8px #ff4d4d !important;
+}
+
+.pin-error-msg{
+    margin-top:14px;
+    color:#ff4d4d;
+    font-size:.8rem;
+    letter-spacing:1px;
+    height:16px;
+    transition:.2s;
+}
+
+@keyframes shake{
+    0%,100%{transform:translateX(0)}
+    20%{transform:translateX(-8px)}
+    40%{transform:translateX(8px)}
+    60%{transform:translateX(-6px)}
+    80%{transform:translateX(6px)}
+}
+
+/* ── MAIN SITE (hidden until PIN ok) ── */
+
+#main-site{
+    display:none;
+}
+
+#main-site.visible{
+    display:block;
+}
+
+/* Background */
+.hero{
+    height:100vh;
+    background:
+    linear-gradient(rgba(0,0,0,.7),rgba(0,0,0,.7)),
+    url('https://images.unsplash.com/photo-1513569771920-c9e1d31714af?auto=format&fit=crop&w=1600&q=80');
+    background-size:cover;
+    background-position:center;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    text-align:center;
+}
+
+/* Glass Effect */
+.language-box{
+    background:rgba(255,255,255,0.05);
+    backdrop-filter:blur(15px);
+    border:1px solid rgba(124,252,0,.3);
+    padding:50px;
+    border-radius:25px;
+    width:90%;
+    max-width:700px;
+    box-shadow:0 0 40px rgba(124,252,0,.25);
+}
+
+.logo{
+    font-size:4rem;
+    font-weight:700;
+    color:#7CFC00;
+    text-shadow:0 0 25px #7CFC00;
+}
+
+.subtitle{
+    margin-top:10px;
+    color:#ccc;
+    font-size:1.1rem;
+}
+
+.languages{
+    margin-top:40px;
+    display:flex;
+    gap:20px;
+    justify-content:center;
+    flex-wrap:wrap;
+}
+
+.btn{
+    text-decoration:none;
+    color:black;
+    background:#7CFC00;
+    padding:15px 35px;
+    border-radius:50px;
+    font-weight:700;
+    transition:.3s;
+    display:inline-block;
+    cursor:pointer;
+    border:none;
+    font-size:1rem;
+}
+
+.btn:hover{
+    transform:translateY(-5px);
+    box-shadow:0 0 25px #7CFC00;
+}
+
+/* About */
+.about{
+    padding:100px 10%;
+    background:#050505;
+}
+
+.about h2{
+    color:#7CFC00;
+    font-size:3rem;
+    margin-bottom:20px;
+}
+
+.about p{
+    color:#ddd;
+    line-height:1.8;
+    max-width:900px;
+}
+
+.features{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
+    gap:25px;
+    margin-top:50px;
+}
+
+.card{
+    background:#111;
+    padding:30px;
+    border-radius:20px;
+    border:1px solid #1f1f1f;
+    transition:.3s;
+}
+
+.card:hover{
+    border-color:#7CFC00;
+    transform:translateY(-5px);
+}
+
+.card h3{
+    color:#7CFC00;
+    margin-bottom:10px;
+}
+
+/* CTA */
+.cta{
+    text-align:center;
+    padding:100px 20px;
+    background:black;
+}
+
+.cta h2{
+    font-size:3rem;
+    color:#7CFC00;
+    margin-bottom:20px;
+}
+
+.cta p{
+    color:#ccc;
+    margin-bottom:30px;
+}
+
+/* Footer */
+footer{
+    background:#050505;
+    padding:30px;
+    text-align:center;
+    color:#999;
+}
+
+</style>
+</head>
 <body>
 
-<!-- LOADER -->
-<div id="loader">
-  <div class="spinner"></div>
-  <p>420 DONUTZ</p>
+<!-- ══════════════════════════════
+     PIN SCREEN
+══════════════════════════════ -->
+<div id="pin-screen">
+  <div class="pin-box" id="pin-box">
+
+    <div class="pin-logo">420 DONUTZ</div>
+    <div class="pin-subtitle">Private Social Club · Barcelona</div>
+
+    <div class="pin-label">Enter access code</div>
+
+    <div class="pin-dots" id="pin-dots">
+      <div class="pin-dot" id="d0"></div>
+      <div class="pin-dot" id="d1"></div>
+      <div class="pin-dot" id="d2"></div>
+      <div class="pin-dot" id="d3"></div>
+      <div class="pin-dot" id="d4"></div>
+      <div class="pin-dot" id="d5"></div>
+    </div>
+
+    <div class="numpad">
+      <button onclick="addDigit('1')">1</button>
+      <button onclick="addDigit('2')">2</button>
+      <button onclick="addDigit('3')">3</button>
+      <button onclick="addDigit('4')">4</button>
+      <button onclick="addDigit('5')">5</button>
+      <button onclick="addDigit('6')">6</button>
+      <button onclick="addDigit('7')">7</button>
+      <button onclick="addDigit('8')">8</button>
+      <button onclick="addDigit('9')">9</button>
+      <button class="del" onclick="delDigit()">⌫</button>
+      <button onclick="addDigit('0')">0</button>
+      <button class="del" onclick="clearPin()" style="font-size:.85rem;color:#555">CLR</button>
+    </div>
+
+    <div class="pin-error-msg" id="pin-error"></div>
+
+  </div>
 </div>
 
-<!-- NAV -->
-<header class="nav">
-  <div class="logo">420 DONUTZ</div>
+<!-- ══════════════════════════════
+     MAIN SITE
+══════════════════════════════ -->
+<div id="main-site">
 
-  <nav>
-    <a href="#home">Home</a>
-    <a href="#about">About</a>
-    <a href="#stats">Stats</a>
-    <a href="#gallery">Gallery</a>
-    <a href="#contact">Contact</a>
-  </nav>
-
-  <div class="lang">
-    <button onclick="setLang('fr')">FR</button>
-    <button onclick="setLang('en')">EN</button>
-    <button onclick="setLang('es')">ES</button>
-  </div>
-</header>
-
-<!-- HERO -->
-<section id="home" class="hero">
-  <div class="hero-box">
-    <h1>420 DONUTZ</h1>
-    <p id="subtitle">Private Members Club Barcelona</p>
-    <a href="#about" class="btn">Enter Experience</a>
+<section class="hero">
+  <div class="language-box">
+    <h1 class="logo">420 DONUTZ</h1>
+    <p class="subtitle">Private Social Club • Barcelona</p>
+    <div class="languages">
+      <a href="/fr" class="btn">🇫🇷 Français</a>
+      <a href="/en" class="btn">🇬🇧 English</a>
+      <a href="/es" class="btn">🇪🇸 Español</a>
+    </div>
   </div>
 </section>
 
-<!-- ABOUT -->
-<section id="about" class="section reveal">
-  <h2>About</h2>
-  <p id="aboutText">
-    A premium private members club experience in Barcelona with a modern lounge atmosphere.
+<section class="about">
+  <h2>Welcome to 420 Donutz</h2>
+  <p>
+    A modern private social club in Barcelona offering a welcoming atmosphere,
+    an international community and a comfortable lounge experience for members.
   </p>
-</section>
-
-<!-- STATS -->
-<section id="stats" class="stats reveal">
-
-  <div class="stat">
-    <h3>2500+</h3>
-    <p>Members</p>
-  </div>
-
-  <div class="stat">
-    <h3>150+</h3>
-    <p>Events</p>
-  </div>
-
-  <div class="stat">
-    <h3>5★</h3>
-    <p>Experience</p>
-  </div>
-
-</section>
-
-<!-- GALLERY -->
-<section id="gallery" class="section reveal">
-  <h2>Gallery</h2>
-
-  <div class="grid">
-    <div class="card" style="background-image:url('https://images.unsplash.com/photo-1521335629791-ce4aec67dd47?auto=format&fit=crop&w=800')"></div>
-    <div class="card" style="background-image:url('https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=800')"></div>
-    <div class="card" style="background-image:url('https://images.unsplash.com/photo-1470229722913-7c0e2dbbafd3?auto=format&fit=crop&w=800')"></div>
-    <div class="card" style="background-image:url('https://images.unsplash.com/photo-1496307042754-b4aa456c4a2d?auto=format&fit=crop&w=800')"></div>
+  <div class="features">
+    <div class="card">
+      <h3>🌿 Premium Atmosphere</h3>
+      <p>Modern design and comfortable spaces.</p>
+    </div>
+    <div class="card">
+      <h3>🌍 International Community</h3>
+      <p>Meet visitors and members from around the world.</p>
+    </div>
+    <div class="card">
+      <h3>🎉 Private Events</h3>
+      <p>Exclusive activities and member gatherings.</p>
+    </div>
+    <div class="card">
+      <h3>☕ Lounge Area</h3>
+      <p>Relax and enjoy a friendly environment.</p>
+    </div>
   </div>
 </section>
 
-<!-- CONTACT -->
-<section id="contact" class="section reveal">
-  <h2>Contact</h2>
-
-  <a class="whatsapp" href="https://wa.me/33612345678" target="_blank">
-    💬 WhatsApp Us
-  </a>
+<section class="cta">
+  <h2>Join The Community</h2>
+  <p>Become part of the 420 Donutz experience.</p>
+  <a href="#contact" class="btn">Request Membership</a>
 </section>
 
-<footer>
-© 420 Donutz - Barcelona
-</footer>
+<footer>© 2026 420 Donutz • Barcelona</footer>
 
-<!-- POPUP -->
-<div id="popup" onclick="closePopup()">
-  <img id="popupImg">
 </div>
 
 <script>
+const CORRECT = '114343';
+let current = '';
 
-/* LOADER */
-window.addEventListener("load",()=>{
-  setTimeout(()=>{
-    document.getElementById("loader").style.display="none";
-  },1200);
-});
-
-/* LANGUAGE */
-function setLang(lang){
-
-if(lang==="fr"){
-document.getElementById("subtitle").innerText="Club privé premium à Barcelone";
-document.getElementById("aboutText").innerText="Expérience lounge moderne et exclusive.";
+function updateDots(){
+    for(let i=0;i<6;i++){
+        const dot = document.getElementById('d'+i);
+        dot.classList.toggle('filled', i < current.length);
+        dot.classList.remove('error');
+    }
 }
 
-if(lang==="en"){
-document.getElementById("subtitle").innerText="Premium private members club Barcelona";
-document.getElementById("aboutText").innerText="A high-end modern lounge experience.";
+function addDigit(d){
+    if(current.length >= 6) return;
+    current += d;
+    updateDots();
+    if(current.length === 6) checkPin();
 }
 
-if(lang==="es"){
-document.getElementById("subtitle").innerText="Club privado premium en Barcelona";
-document.getElementById("aboutText").innerText="Experiencia lounge exclusiva y moderna.";
-}
-}
-
-/* GALLERY POPUP */
-document.querySelectorAll(".card").forEach(card=>{
-card.addEventListener("click",()=>{
-document.getElementById("popup").style.display="flex";
-document.getElementById("popupImg").src =
-card.style.backgroundImage.slice(5,-2);
-});
-});
-
-function closePopup(){
-document.getElementById("popup").style.display="none";
+function delDigit(){
+    current = current.slice(0,-1);
+    document.getElementById('pin-error').textContent = '';
+    updateDots();
 }
 
-/* SCROLL REVEAL */
-const observer = new IntersectionObserver(entries=>{
-entries.forEach(entry=>{
-if(entry.isIntersecting){
-entry.target.classList.add("active");
+function clearPin(){
+    current = '';
+    document.getElementById('pin-error').textContent = '';
+    updateDots();
 }
-});
-});
 
-document.querySelectorAll(".reveal").forEach(el=>{
-observer.observe(el);
-});
+function checkPin(){
+    if(current === CORRECT){
+        const screen = document.getElementById('pin-screen');
+        screen.classList.add('hidden');
+        document.getElementById('main-site').classList.add('visible');
+        setTimeout(()=>screen.remove(), 700);
+    } else {
+        // Show error
+        for(let i=0;i<6;i++) document.getElementById('d'+i).classList.add('error');
+        document.getElementById('pin-box').classList.add('error');
+        document.getElementById('pin-error').textContent = 'Code incorrect — réessayez';
+        setTimeout(()=>{
+            document.getElementById('pin-box').classList.remove('error');
+            current = '';
+            document.getElementById('pin-error').textContent = '';
+            updateDots();
+        }, 700);
+    }
+}
 
+// Keyboard support
+document.addEventListener('keydown', e => {
+    if(e.key >= '0' && e.key <= '9') addDigit(e.key);
+    if(e.key === 'Backspace') delDigit();
+});
 </script>
-
 </body>
 </html>
